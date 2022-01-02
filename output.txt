@@ -1,0 +1,5 @@
+Thread ... is calculating abstract_1.txt
+###
+Result 1:
+File: abstract_1.txt
+Score: 0.0238
