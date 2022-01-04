@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <sstream>
 #include <mutex>
+#include <fstream>
 using namespace std;
 
 int result = 0;
@@ -94,6 +95,33 @@ double J(vector<string> &v1, vector<string> &v2){
 	return double(inter.size()) / double(uni.size());
 }
 
+
+vector<string> sentences(string fileName){
+
+	ifstream input_file(fileName);
+    
+    string line = string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
+
+    vector <string> sentences;
+     
+
+    stringstream check1(line);
+     
+    string intermediate;
+     
+    // Tokenizing w.r.t. space ' '
+    while(getline(check1, intermediate, '.'))
+    {
+        sentences.push_back(intermediate);
+    }
+
+    input_file.close();
+
+    return sentences;
+     
+
+}
+
 void theFunc(ofstream &outFile, string abstractFileName, vector<string> &words){
 
 	outFile << "Thread ... is calculating " << abstractFileName <<"\n"; //bu mainde de yapılabilir
@@ -112,7 +140,40 @@ void theFunc(ofstream &outFile, string abstractFileName, vector<string> &words){
 
 	outFile << "Score: " << setprecision(4) << fixed << j << "\n";
 
+	vector<string> sentences_ = sentences(abstractFileName);
 
+	vector<string> summary;
+
+	for(int i = 0; i < sentences_.size() ; i++){
+		string sentence = sentences_[i];
+		vector<string> wordsInSentence;
+		stringstream check1(sentence);
+     
+    	string intermediate;
+    	while(getline(check1, intermediate, ' ')){
+        wordsInSentence.push_back(intermediate);
+    	}
+    	bool found = false;
+
+    	for(int j = 0; j < words.size(); j++){
+    		for(int k = 0; k < wordsInSentence.size(); k++){
+    			if(words[j] == wordsInSentence[k]){
+    				summary.push_back(sentence);
+    				found = true;
+    				break;
+    			}
+    		}
+    		if(found){
+    			break;
+    		}
+    	}
+	}
+
+	outFile << "Summary: ";
+
+	for(int i = 0; i < summary.size(); i++){
+		outFile << summary[i] << ".";
+	}
 
 }
 
@@ -169,6 +230,12 @@ int main(int argc,char* argv[]){
     theFunc(outFile, abstracts[0], words);
 
     outFile.close();
+
+   /* vector<string> sent =  sentences("abstract_1.txt");
+
+    for(int i = 0 ; i < sent.size() ; i++){
+    	cout << sent[i] << "####";
+    }*/
 
 
 	/*pthread_t thread1, thread2;
