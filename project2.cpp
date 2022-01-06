@@ -10,11 +10,16 @@
 #include <algorithm>
 #include <stdio.h>
 #include <sstream>
-#include <mutex>
 #include <fstream>
+#include <iomanip>
+#include <queue>
 using namespace std;
 
 int result = 0;
+queue<string> jobQueue;
+vector<string> words;
+ofstream outFile;
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 
 void* myturn( void *arg){
@@ -122,9 +127,24 @@ vector<string> sentences(string fileName){
 
 }
 
-void theFunc(ofstream &outFile, string abstractFileName, vector<string> &words){
+void* theFunc(void *arg){
+
+    pthread_mutex_lock(&mutex);
+    cout <<jobQueue.size();
+    if(jobQueue.size() == 0){
+        return NULL;
+    }
+
+    cout << "ok3" <<" " ;
+
+    string abstractFileName = jobQueue.front();
+    jobQueue.pop();
+
+    cout <<abstractFileName <<" ";
 
 	outFile << "Thread ... is calculating " << abstractFileName <<"\n"; //bu mainde de yapılabilir
+
+    cout << "ok4" <<" " ;
 
 
 	// MUTEX
@@ -175,13 +195,17 @@ void theFunc(ofstream &outFile, string abstractFileName, vector<string> &words){
 		outFile << summary[i] << ".";
 	}
 
+    pthread_mutex_unlock(&mutex);
+
+    pthread_exit(0);
+
 }
 
 int main(int argc,char* argv[]){
 
+
 	string inputFileName = argv[1];
 	string outputFileName = argv[2];
-
 
 	ifstream inputFile;
 	inputFile.open(inputFileName);
@@ -202,33 +226,34 @@ int main(int argc,char* argv[]){
 	int N =argArray[2];
 
 	getline(inputFile, line);
-	vector<string> words;
 	stringstream ss2(line);
 
     while(getline(ss2, temp_str, ' ')){ 
       words.push_back(temp_str);
     }
 
-    vector<string> abstracts;
 
     for(int i = 0; i < A ;i++){
     	getline(inputFile, line);
-    	abstracts.push_back(line);
+    	jobQueue.push(line);
     }
 
     inputFile.close();
 
-    vector<pthread_t> threads;
+    vector<pthread_t> threads(T);
 
-    for(int i = 0; i < T; i++){
-    	//create threads
-    }
-
-    ofstream outFile;
+    //ofstream outFile;
     outFile.open(outputFileName);
 
-    theFunc(outFile, abstracts[0], words);
+    cout <<"ok" << " ";
 
+    pthread_t tids[T];
+    for(int i =0;i<T;i++){
+        pthread_create(&tids[i], NULL, &theFunc, NULL);
+    }
+    for(int i =0;i<T;i++){
+        pthread_join(tids[i], NULL);
+    }
     outFile.close();
 
    /* vector<string> sent =  sentences("abstract_1.txt");
