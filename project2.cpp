@@ -13,33 +13,20 @@
 #include <fstream>
 #include <iomanip>
 #include <queue>
+#include <utility>
+#include <set>
 using namespace std;
 
 int result = 0;
 queue<string> jobQueue;
 vector<string> words;
 ofstream outFile;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-
-void* myturn( void *arg){
-	int i;
-	for(i=0; i < 2; i++){
-		sleep(2);
-		printf("If you're happy and you know it clap your hands! - %d\n", i);
-		sleep(2);
-		printf("CLAP CLAP! - %d\n", i);
-	}
-	return NULL;
-}
-void yourturn(){
-	int i;
-  	for(i=0; i < 2; i++){
-		printf("Thanks! - %d\n", i);
-		sleep(2);
-	}
-}
-
+pthread_mutex_t QueueMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t fileMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t waitMutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t resultMutex = PTHREAD_MUTEX_INITIALIZER;
+std::set<pair<string, string>> results;
+pthread_cond_t cond;
 
 
 vector<string> tokenizer(string fileName){
@@ -127,40 +114,46 @@ vector<string> sentences(string fileName){
 
 }
 
-void* theFunc(void *arg){
+void calculator(string fileName){
 
-    pthread_mutex_lock(&mutex);
-    cout <<jobQueue.size();
-    if(jobQueue.size() == 0){
-        return NULL;
-    }
+    vector<string> tokens = tokenizer(fileName);
+    double j = J(words, tokens);
+    stringstream stream;
+    stream << fixed << std::setprecision(4) << j;
+    string s = stream.str();
+    pair<string,string> p = make_pair(s, fileName);
+
+    pthread_mutex_lock(&resultMutex);
+    results.insert(p);
+    pthread_mutex_unlock(&resultMutex);
+
+}
+
+string theFunc(string fileName, int id){
+
 
     cout << "ok3" <<" " ;
 
-    string abstractFileName = jobQueue.front();
-    jobQueue.pop();
+    string str = "";
 
-    cout <<abstractFileName <<" ";
-
-	outFile << "Thread ... is calculating " << abstractFileName <<"\n"; //bu mainde de yapılabilir
-
-    cout << "ok4" <<" " ;
-
-
-	// MUTEX
-
-	outFile << "###" << "\n";
+	str = str + "###" + "\n";
+    pthread_mutex_lock(&resultMutex);
 	result = result + 1;
-	outFile << "Result " << result << ":" << "\n";
-	outFile << "File: " << abstractFileName << "\n";
+    pthread_mutex_unlock(&resultMutex);
+	str = str + "Result " + to_string(result) + ":" + "\n";
+	str = str + "File: " + fileName + "\n";
 
-	vector<string> tokens = tokenizer(abstractFileName);
+	vector<string> tokens = tokenizer(fileName);
 
 	double j = J(words, tokens);
 
-	outFile << "Score: " << setprecision(4) << fixed << j << "\n";
+    stringstream stream;
+    stream << fixed << std::setprecision(4) << j;
+    string s = stream.str();
 
-	vector<string> sentences_ = sentences(abstractFileName);
+	str = str + "Score: " + s + "\n";
+
+	vector<string> sentences_ = sentences(fileName);
 
 	vector<string> summary;
 
@@ -189,23 +182,64 @@ void* theFunc(void *arg){
     	}
 	}
 
-	outFile << "Summary: ";
+	str = str + "Summary: ";
 
 	for(int i = 0; i < summary.size(); i++){
-		outFile << summary[i] << ".";
+		str = str + summary[i] + ".";
 	}
 
-    pthread_mutex_unlock(&mutex);
-
-    pthread_exit(0);
+    return str + "\n";
 
 }
 
+void* start(void* arg){
+
+    if(jobQueue.size()==0){
+        pthread_cond_signal(&cond);
+        pthread_exit(0);
+    }
+    pthread_mutex_lock(&QueueMutex);
+    
+    string fileName = jobQueue.front();
+    jobQueue.pop();
+
+    pthread_mutex_unlock(&QueueMutex);
+
+    auto myid = pthread_self();
+    stringstream ss;
+    ss << myid;
+    string mystring = ss.str();
+
+    pthread_mutex_lock(&fileMutex);
+
+    outFile << "Thread " + mystring + " is calculating " + fileName + "\n";
+
+    pthread_mutex_unlock(&fileMutex);
+
+    calculator(fileName);
+
+   /* pthread_mutex_unlock(&fileMutex);
+
+    string result = theFunc(fileName, pthread_self());
+
+    pthread_mutex_lock(&fileMutex);*/
+
+    //outFile << result;
+
+    //pthread_mutex_unlock(&fileMutex);
+
+    start(NULL);
+
+    pthread_exit(0);
+}
 int main(int argc,char* argv[]){
+
+    pthread_cond_init(cond, NULL);
 
 
 	string inputFileName = argv[1];
 	string outputFileName = argv[2];
+
 
 	ifstream inputFile;
 	inputFile.open(inputFileName);
@@ -216,6 +250,7 @@ int main(int argc,char* argv[]){
 	vector<int> argArray;
 	stringstream ss(line); 
     string temp_str;
+
 
     while(getline(ss, temp_str, ' ')){ 
       argArray.push_back(stoi(temp_str));
@@ -242,17 +277,20 @@ int main(int argc,char* argv[]){
 
     vector<pthread_t> threads(T);
 
+
+    char c = 'A';
+
+
     //ofstream outFile;
     outFile.open(outputFileName);
 
-    cout <<"ok" << " ";
-
-    pthread_t tids[T];
     for(int i =0;i<T;i++){
-        pthread_create(&tids[i], NULL, &theFunc, NULL);
+        pthread_create(&threads[i], NULL, &start, NULL);
+        pthread_setname_np(threads[i], &c);
+        c = c + 1;
     }
     for(int i =0;i<T;i++){
-        pthread_join(tids[i], NULL);
+        pthread_join(threads[i], NULL);
     }
     outFile.close();
 
@@ -277,6 +315,9 @@ int main(int argc,char* argv[]){
 		printf("An error occured while joining the threads");
 	}
 	yourturn();*/
+    pthread_cond_destroy(&cond);
+    pthread_mutex_destroy(&fileMutex);
+    pthread_mutex_destroy(&resultMutex);
 	pthread_exit(NULL);
 	//return 0;
  }

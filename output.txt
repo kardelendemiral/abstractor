@@ -1,6 +1,3 @@
-Thread ... is calculating abstract_1.txt
-###
-Result 1:
-File: abstract_1.txt
-Score: 0.0238
-Summary: since its emergence in december 2019 corona virus disease 2019 covid19 has impacted several countries affecting more than 90 thousand patients and making it a global public threat .
+Thread 140070511793920 is calculating abstract_1.txt
+Thread 140070520186624 is calculating abstract_2.txt
+Thread 140070520186624 is calculating abstract_3.txt
