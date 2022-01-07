@@ -91,20 +91,28 @@ double J(vector<string> &v1, vector<string> &v2){
 vector<string> sentences(string fileName){
 
 	ifstream input_file(fileName);
-    
-    string line = string((std::istreambuf_iterator<char>(input_file)), std::istreambuf_iterator<char>());
 
     vector <string> sentences;
      
 
-    stringstream check1(line);
-     
-    string intermediate;
-     
-    // Tokenizing w.r.t. space ' '
-    while(getline(check1, intermediate, '.'))
-    {
-        sentences.push_back(intermediate);
+    string sentence, rest = "";
+    int x, len;
+
+    while (input_file) {
+        getline(input_file, sentence);
+        len=sentence.length();
+        for(x=0;x<len;x++)
+        {
+            if(sentence[x] != '\0')
+                rest+=sentence[x];
+            if(sentence[x] == '.')
+            {
+                sentences.push_back(rest);
+                x++;
+                rest = "";
+            }
+        }
+        rest+=" ";
     }
 
     input_file.close();
@@ -124,6 +132,7 @@ void calculator(string fileName){
     pair<string,string> p = make_pair(s, fileName);
 
     pthread_mutex_lock(&resultMutex);
+    //cout << fileName <<" " << s << endl;
     results.insert(p);
     pthread_mutex_unlock(&resultMutex);
 
@@ -299,11 +308,13 @@ int main(int argc,char* argv[]){
         pthread_cond_wait(&cond, &waitMutex);
     } 
 
-    set<pair<string, string>>::iterator itr;
+    set<pair<string, string>>::reverse_iterator itr;
 
     int count = 0;
 
-    for (itr = results.begin(); itr != results.end(); itr++) {
+    outFile << "###" << "\n";
+
+    for (itr = results.rbegin(); itr != results.rend(); itr++) {
         
         if(count == N){
             break;
@@ -311,8 +322,6 @@ int main(int argc,char* argv[]){
         string score = (*itr).first; 
         string name = (*itr).second;
 
-
-        outFile << "###" << "\n";
 
         result = result + 1;
         outFile << "Result " << to_string(result) << ":" << "\n";
@@ -352,11 +361,11 @@ int main(int argc,char* argv[]){
         outFile << "Summary: ";
 
         for(int i = 0; i < summary.size(); i++){
-            outFile << summary[i] << "\n";
+            outFile << summary[i];
         }
 
         count++;
-
+        outFile << "\n"<< "###" << "\n";
 
     }
 
