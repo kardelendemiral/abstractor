@@ -234,7 +234,7 @@ void* start(void* arg){
 }
 int main(int argc,char* argv[]){
 
-    pthread_cond_init(cond, NULL);
+    pthread_cond_init(&cond, NULL);
 
 
 	string inputFileName = argv[1];
@@ -292,7 +292,75 @@ int main(int argc,char* argv[]){
     for(int i =0;i<T;i++){
         pthread_join(threads[i], NULL);
     }
-    outFile.close();
+
+    pthread_mutex_lock(&waitMutex);
+
+    if(jobQueue.size() != 0){
+        pthread_cond_wait(&cond, &waitMutex);
+    } 
+
+    set<pair<string, string>>::iterator itr;
+
+    int count = 0;
+
+    for (itr = results.begin(); itr != results.end(); itr++) {
+        
+        if(count == N){
+            break;
+        }
+        string score = (*itr).first; 
+        string name = (*itr).second;
+
+
+        outFile << "###" << "\n";
+
+        result = result + 1;
+        outFile << "Result " << to_string(result) << ":" << "\n";
+        outFile << "File: " << name << "\n";
+
+        outFile << "Score: " << score << "\n";
+
+        vector<string> sentences_ = sentences(name);
+
+        vector<string> summary;
+
+        for(int i = 0; i < sentences_.size() ; i++){
+            string sentence = sentences_[i];
+            vector<string> wordsInSentence;
+            stringstream check1(sentence);
+     
+            string intermediate;
+            while(getline(check1, intermediate, ' ')){
+                wordsInSentence.push_back(intermediate);
+            }
+            bool found = false;
+
+            for(int j = 0; j < words.size(); j++){
+                for(int k = 0; k < wordsInSentence.size(); k++){
+                    if(words[j] == wordsInSentence[k]){
+                        summary.push_back(sentence);
+                        found = true;
+                        break;
+                    }
+                }
+                if(found){
+                    break;
+                }
+            }
+        }
+
+        outFile << "Summary: ";
+
+        for(int i = 0; i < summary.size(); i++){
+            outFile << summary[i] << "\n";
+        }
+
+        count++;
+
+
+    }
+
+    pthread_mutex_unlock(&waitMutex);
 
    /* vector<string> sent =  sentences("abstract_1.txt");
 
@@ -315,6 +383,7 @@ int main(int argc,char* argv[]){
 		printf("An error occured while joining the threads");
 	}
 	yourturn();*/
+    outFile.close();
     pthread_cond_destroy(&cond);
     pthread_mutex_destroy(&fileMutex);
     pthread_mutex_destroy(&resultMutex);
