@@ -25,7 +25,7 @@ pthread_mutex_t QueueMutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t fileMutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t waitMutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t resultMutex = PTHREAD_MUTEX_INITIALIZER;
-std::set<pair<string, string>> results;
+std::multiset<pair<string, string>> results;
 pthread_cond_t cond;
 
 
@@ -93,26 +93,24 @@ vector<string> sentences(string fileName){
 	ifstream input_file(fileName);
 
     vector <string> sentences;
-     
+    string s = "";
 
-    string sentence, rest = "";
-    int x, len;
-
+    string word;
     while (input_file) {
-        getline(input_file, sentence);
-        len=sentence.length();
-        for(x=0;x<len;x++)
-        {
-            if(sentence[x] != '\0')
-                rest+=sentence[x];
-            if(sentence[x] == '.')
-            {
-                sentences.push_back(rest);
-                x++;
-                rest = "";
-            }
+        input_file >> word;
+        if(word[0]=='\0' || word[0]=='\n' || word[0]=='\r'){
+            word = word.substr(1);
         }
-        rest+=" ";
+        s = s + " " + word;
+    }
+
+    stringstream check1(s);
+     
+    string intermediate;
+    
+    while(getline(check1, intermediate, '.'))
+    {
+        sentences.push_back(intermediate);
     }
 
     input_file.close();
@@ -214,9 +212,9 @@ void* start(void* arg){
 
     pthread_mutex_unlock(&QueueMutex);
 
-    auto myid = pthread_self();
+    pid_t tid = pthread_self();
     stringstream ss;
-    ss << myid;
+    ss << tid;
     string mystring = ss.str();
 
     pthread_mutex_lock(&fileMutex);
@@ -287,15 +285,14 @@ int main(int argc,char* argv[]){
     vector<pthread_t> threads(T);
 
 
-    char c = 'A';
+    char c =  0;
 
 
     //ofstream outFile;
     outFile.open(outputFileName);
 
     for(int i =0;i<T;i++){
-        pthread_create(&threads[i], NULL, &start, NULL);
-        pthread_setname_np(threads[i], &c);
+        pthread_create(&threads[i], NULL, &start, &c);
         c = c + 1;
     }
     for(int i =0;i<T;i++){
@@ -358,18 +355,23 @@ int main(int argc,char* argv[]){
             }
         }
 
-        outFile << "Summary: ";
+        outFile << "Summary:";
 
         for(int i = 0; i < summary.size(); i++){
-            outFile << summary[i];
+            outFile << summary[i] <<".";
         }
 
         count++;
-        outFile << "\n"<< "###" << "\n";
+        outFile << " \n"<< "###" << "\n";
 
     }
 
     pthread_mutex_unlock(&waitMutex);
+
+  /* vector<string> a = sentences("abstract_11.txt");
+    for(int i =0;i<a.size();i++){
+        cout << a[i] <<"\n";
+    }*/
 
    /* vector<string> sent =  sentences("abstract_1.txt");
 
