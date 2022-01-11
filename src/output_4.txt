@@ -1,0 +1,25 @@
+Thread A is calculating abstract_14.txt
+Thread B is calculating abstract_13.txt
+Thread B is calculating abstract_12.txt
+Thread A is calculating abstract_8.txt
+Thread B is calculating abstract_6.txt
+Thread A is calculating abstract_7.txt
+Thread B is calculating abstract_5.txt
+Thread A is calculating abstract_4.txt
+Thread B is calculating abstract_5.txt
+###
+Result 1:
+File: abstract_12.txt
+Score: 0.0256
+Summary: by contextualising and disambiguating transmission risks that are particularly prominent for disadvantaged populations this review can assist public health efforts throughout and beyond the covid19 pandemic . 
+###
+Result 2:
+File: abstract_5.txt
+Score: 0.0200
+Summary: the covid19 pandemic caused by sarscov2 remains a significant issue for global health economics and society . 
+###
+Result 3:
+File: abstract_5.txt
+Score: 0.0200
+Summary: the covid19 pandemic caused by sarscov2 remains a significant issue for global health economics and society . 
+###

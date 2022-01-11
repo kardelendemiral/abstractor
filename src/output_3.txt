@@ -1,0 +1,22 @@
+Thread A is calculating abstract_11.txt
+Thread B is calculating abstract_9.txt
+Thread C is calculating abstract_6.txt
+Thread A is calculating abstract_2.txt
+Thread D is calculating abstract_15.txt
+Thread E is calculating abstract_4.txt
+###
+Result 1:
+File: abstract_4.txt
+Score: 0.0133
+Summary: new guidelines are required in dental clinics to avoid contagion caused by crossinfections . a narrative review was performed using both primary sources such as scientific articles and secondary ones such as bibliographic indexes web pages and databases . twelve articles were selected to develop the bibliographic review by applying preestablished inclusion and exclusion criteria . 
+###
+Result 2:
+File: abstract_2.txt
+Score: 0.0110
+Summary: this paper therefore aims to provide a comprehensive review of the current recommendations on the use of mouthwashes against the covid19 pandemic and to analyse the advantages and disadvantages of most conventional antiseptic mouthwashes used in dentistry . 
+###
+Result 3:
+File: abstract_6.txt
+Score: 0.0074
+Summary: the world health organization declared the pandemic diffusion of covid19 and restrictive measures to limit contagion have been taken in several countries . 
+###

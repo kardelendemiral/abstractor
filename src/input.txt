@@ -1,0 +1,6 @@
+2 4 2
+virus pandemic global
+abstract_1.txt
+abstract_3.txt
+abstract_6.txt
+abstract_5.txt

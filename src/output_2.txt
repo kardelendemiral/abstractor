@@ -1,0 +1,41 @@
+Thread A is calculating abstract_1.txt
+Thread B is calculating abstract_2.txt
+Thread A is calculating abstract_3.txt
+Thread C is calculating abstract_4.txt
+Thread D is calculating abstract_5.txt
+Thread B is calculating abstract_6.txt
+Thread D is calculating abstract_7.txt
+Thread C is calculating abstract_8.txt
+Thread B is calculating abstract_9.txt
+Thread D is calculating abstract_10.txt
+Thread A is calculating abstract_11.txt
+Thread C is calculating abstract_12.txt
+Thread A is calculating abstract_13.txt
+Thread D is calculating abstract_14.txt
+Thread C is calculating abstract_15.txt
+###
+Result 1:
+File: abstract_11.txt
+Score: 0.0244
+Summary: the mode of community and intrafamily transmission is threatening residents in shenzhen . 
+###
+Result 2:
+File: abstract_15.txt
+Score: 0.0172
+Summary: we estimated the basic reproduction number r0 of 2019ncov to be around 2 90 high density interval 1 indicating the potential for sustained humantohuman transmission . transmission characteristics appear to be of similar magnitude to severe acute respiratory syndromerelated coronavirus sarscov and pandemic influenza indicating a risk of global spread .
+###
+Result 3:
+File: abstract_10.txt
+Score: 0.0132
+Summary: as crowding is an environmental risk factor for contamination its transmission is high among patients and staff in hospital and also in elderlycare centers . 
+###
+Result 4:
+File: abstract_12.txt
+Score: 0.0127
+Summary: the current pandemic is defined by the transmission of severe acute respiratory syndrome coronavirus 2 sarscov2 the virus that can lead to coronavirus disease 2019 covid19 . how is sarscov2 transmitted in this review we use a global lens to examine the sociological contexts that are potentially and systematically involved in high rates of sarscov2 transmission including lack of personal protective equipment population density and confinement . by contextualising and disambiguating transmission risks that are particularly prominent for disadvantaged populations this review can assist public health efforts throughout and beyond the covid19 pandemic . 
+###
+Result 5:
+File: abstract_1.txt
+Score: 0.0119
+Summary: the routes of transmission are direct contact and droplet and possible aerosol transmissions . due to the unique nature of dentistry most dental procedures generate significant amounts of droplets and aerosols posing potential risks of infection transmission . understanding the significance of aerosol transmission and its implications in dentistry can facilitate the identification and correction of negligence in daily dental practice . 
+###

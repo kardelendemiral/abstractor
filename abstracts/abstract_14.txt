@@ -1,0 +1,21 @@
+the potential aerosolised transmission of severe acute respiratory syndrome coronavirus2 is of global concern . 
+airborne precaution personal protective equipment and preventative measures are universally mandated for medical 
+procedures deemed to be aerosol generating . the implementation of these measures is having a huge impact on 
+healthcare provision . there is currently a lack of quantitative evidence on the number and size of airborne 
+particles produced during aerosolgenerating procedures to inform risk assessments . to address this evidence gap 
+we conducted realtime highresolution environmental monitoring in ultraclean ventilation operating theatres 
+during tracheal intubation and extubation sequences . continuous sampling with an optical particle sizer allowed 
+characterisation of aerosol generation within the zone between the patient and anaesthetist . aerosol monitoring 
+showed a very low background particle count 0 particles allowing resolution of transient increases in 
+airborne particles associated with airway management . as a positive reference control we quantitated the aerosol 
+produced in the same setting by a volitional cough average concentration 732 418 particles n 38 . 
+tracheal intubation including facemask ventilation produced very low quantities of aerosolised particles average 
+concentration particles n 14 p vs . cough . tracheal extubation particularly when 
+the patient coughed produced a detectable aerosol 21 18 l1 n 10 which was 15fold greater than intubation 
+p 0 but 35fold less than a volitional cough p 0 the study does not support the designation 
+of elective tracheal intubation as an aerosolgenerating procedure . extubation generates more detectable aerosol 
+than intubation but falls below the current criterion for designation as a highrisk aerosolgenerating procedure . 
+these novel findings from realtime aerosol detection in a routine healthcare setting provide a quantitative 
+methodology for risk assessment that can be extended to other airway management techniques and clinical settings . 
+they also indicate the need for reappraisal of what constitutes an aerosolgenerating procedure and the associated 
+precautions for routine anaesthetic airway management .

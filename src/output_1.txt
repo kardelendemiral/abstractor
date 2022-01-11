@@ -1,0 +1,14 @@
+Thread A is calculating abstract_2.txt
+Thread B is calculating abstract_7.txt
+Thread C is calculating abstract_5.txt
+Thread C is calculating abstract_4.txt
+Thread B is calculating abstract_12.txt
+Thread B is calculating abstract_10.txt
+Thread A is calculating abstract_15.txt
+Thread C is calculating abstract_13.txt
+###
+Result 1:
+File: abstract_15.txt
+Score: 0.0172
+Summary: we estimated the basic reproduction number r0 of 2019ncov to be around 2 90 high density interval 1 indicating the potential for sustained humantohuman transmission . 
+###

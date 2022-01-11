@@ -1,0 +1,16 @@
+the airborne transmission of sarscov2 is still debated . the aim of this rapid review is to evaluate the 
+covid19 risk associated with the presence of airconditioning systems . original studies both observational 
+and experimental researches written in english and with no limit on time on the airborne transmission of 
+sarscov merscov and sarscov2 coronaviruses that were associated with outbreaks were included . searches 
+were made on pubmedmedline pubmed central pmc google scholar databases and medrxiv . a snowball strategy 
+was adopted to extend the search . fourteen studies reporting outbreaks of coronavirus infection associated 
+with the airconditioning systems were included . all studies were carried out in the far east . in six out the 
+seven studies on sars the role of heating ventilation and air conditioning hvac in the outbreak was 
+indirectly proven by the spatial and temporal pattern of cases or by airflowdynamics models . in one report 
+on mers the contamination of hvac by viral particles was demonstrated . in four out of the six studies on 
+sarscov2 the diffusion of viral particles through hvac was suspected or supported by computer simulation . 
+in conclusion there is sufficient evidence of the airborne transmission of coronaviruses in previous asian 
+outbreaks and this has been taken into account in the guidelines released by organizations and international 
+agencies for controlling the spread of sarscov2 in indoor environments . however the technological differences 
+in hvac systems prevent the generalization of the results on a worldwide basis . the few covid19 investigations 
+available do not provide sufficient evidence that the sarscov2 virus can be transmitted by hvac systems .

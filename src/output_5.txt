@@ -1,0 +1,32 @@
+Thread A is calculating abstract_1.txt
+Thread B is calculating abstract_2.txt
+Thread C is calculating abstract_4.txt
+Thread A is calculating abstract_6.txt
+Thread B is calculating abstract_5.txt
+Thread C is calculating abstract_8.txt
+Thread B is calculating abstract_9.txt
+Thread A is calculating abstract_10.txt
+Thread C is calculating abstract_11.txt
+Thread A is calculating abstract_13.txt
+Thread C is calculating abstract_14.txt
+###
+Result 1:
+File: abstract_11.txt
+Score: 0.0435
+Summary: strategies to strengthen prevention and interruption of these transmissions should be urgently addressed . 
+###
+Result 2:
+File: abstract_13.txt
+Score: 0.0135
+Summary: in one report on mers the contamination of hvac by viral particles was demonstrated . the few covid19 investigations available do not provide sufficient evidence that the sarscov2 virus can be transmitted by hvac systems . 
+###
+Result 3:
+File: abstract_4.txt
+Score: 0.0128
+Summary: italy is one of the most affected countries in europe . precautionary measures should be applied to control covid19 in clinical practice . 
+###
+Result 4:
+File: abstract_1.txt
+Score: 0.0111
+Summary: in addition to the standard precautions some special precautions that should be implemented during an outbreak have been raised in this review . 
+###
